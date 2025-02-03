@@ -1,6 +1,10 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
 
 func UploadFile() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -12,6 +16,8 @@ func UploadFile() gin.HandlerFunc {
 			return
 		}
 		defer file.Close()
+
+		fmt.Print("File uploaded: ", file)
 
 		c.JSON(200, gin.H{
 			"message":  "File uploaded successfully",

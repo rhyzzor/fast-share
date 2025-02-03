@@ -2,11 +2,11 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rhyzzor/fast-share/internal/config"
 	"github.com/rhyzzor/fast-share/internal/database"
+	"github.com/rhyzzor/fast-share/internal/handlers"
 )
 
 func main() {
@@ -19,17 +19,7 @@ func main() {
 	}
 	defer database.Disconnect(db.Client())
 
+	r.POST("/upload", handlers.UploadFile())
+
 	r.Run(":" + cfg.Port)
-}
-
-func setupRoutes() *gin.Engine {
-	r := gin.Default()
-
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello, World!",
-		})
-	})
-
-	return r
 }
