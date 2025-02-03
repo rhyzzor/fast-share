@@ -1,0 +1,9 @@
+CREATE TABLE attachment (
+    id TEXT PRIMARY KEY,
+    short_link TEXT NOT NULL,
+    file_name TEXT NOT NULL,
+    file_size INT NOT NULL,
+    url TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
