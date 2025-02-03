@@ -24,3 +24,7 @@ func Connect(uri string) (*mongo.Database, error) {
 	fmt.Println("Connected to MongoDB!")
 	return client.Database("fast-share"), nil
 }
+
+func Disconnect(client *mongo.Client) {
+	client.Disconnect(context.Background())
+}
