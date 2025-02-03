@@ -1,22 +1,25 @@
 package main
 
 import (
+	"log"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rhyzzor/fast-share/internal/config"
+	"github.com/rhyzzor/fast-share/internal/database"
 )
 
-const defaultPort = "8080"
-
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
+	r := gin.Default()
+	cfg := config.LoadConfig()
 
-	r := setupRoutes()
-	r.Run(":" + port)
+	db, err := database.Connect(cfg.MongoURI)
+	if err != nil {
+		log.Fatalf("failed to connect to database: %v", err)
+	}
+	defer database.Disconnect(db.Client())
+
+	r.Run(":" + cfg.Port)
 }
 
 func setupRoutes() *gin.Engine {
